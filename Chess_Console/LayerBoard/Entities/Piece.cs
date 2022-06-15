@@ -1,6 +1,6 @@
-﻿using Board.Enums;
+﻿using LayerBoard.Enums;
 
-namespace Board.Entities
+namespace LayerBoard.Entities
 {
     class Piece
     {

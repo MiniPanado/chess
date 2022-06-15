@@ -1,4 +1,4 @@
-﻿namespace Board.Entities
+﻿namespace LayerBoard.Entities
 {
     class Board
     {
