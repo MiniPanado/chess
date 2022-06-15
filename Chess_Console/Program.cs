@@ -1,4 +1,5 @@
 ﻿using System;
+using Board.Entities;
 
 namespace Chess_Console
 {
