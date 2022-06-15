@@ -1,5 +1,5 @@
 ﻿using System;
-using LayerBoard.Entities;
+using Chessboard.Entities;
 
 namespace Chess_Console
 {
@@ -17,7 +17,7 @@ namespace Chess_Console
                     }
                     else
                     {
-                        Console.Write($"{board.Pieces[i, j]} ");
+                        Console.Write($"{board.Pieces[i, j].ToString()} ");
                     }
                 }
                 Console.WriteLine();

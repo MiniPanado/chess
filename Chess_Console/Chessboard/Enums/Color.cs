@@ -1,4 +1,4 @@
-﻿namespace LayerBoard.Enums
+﻿namespace Chessboard.Enums
 {
     enum Color
     {

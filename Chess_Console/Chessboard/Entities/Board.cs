@@ -1,4 +1,4 @@
-﻿namespace LayerBoard.Entities
+﻿namespace Chessboard.Entities
 {
     class Board
     {
@@ -17,6 +17,13 @@
             Lines = lines;
             Columns = columns;
             Pieces = new Piece[lines, columns];
+        }
+
+        //Methods
+        public void PlacePiece(Piece piece, Position position)
+        {
+            Pieces[position.Line, position.Column] = piece;
+            piece.Position = position;
         }
     }
 }

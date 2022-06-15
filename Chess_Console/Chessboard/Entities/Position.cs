@@ -1,4 +1,4 @@
-﻿namespace LayerBoard.Entities
+﻿namespace Chessboard.Entities
 {
     class Position
     {

@@ -1,6 +1,6 @@
-﻿using LayerBoard.Enums;
+﻿using Chessboard.Enums;
 
-namespace LayerBoard.Entities
+namespace Chessboard.Entities
 {
     class Piece
     {
@@ -15,12 +15,10 @@ namespace LayerBoard.Entities
         {
         }
 
-        public Piece(Position position, Color color, Board board)
+        public Piece(Board board, Color color)
         {
-            Position = position;
-            Color = color;
             Board = board;
-            NumberOfMoves = 0;
+            Color = color;
         }
     }
 }
