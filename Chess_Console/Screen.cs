@@ -17,7 +17,7 @@ namespace Chess_Console
                     }
                     else
                     {
-                        Console.Write($"{board.Pieces[i, j].ToString()} ");
+                        Console.Write($"{board.Pieces[i, j]} ");
                     }
                 }
                 Console.WriteLine();

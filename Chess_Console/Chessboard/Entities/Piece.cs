@@ -5,9 +5,9 @@ namespace Chessboard.Entities
     class Piece
     {
         //Variables
-        public Position Position { get; set; }
-        public Color Color { get; protected set; }
         public Board Board { get; protected set; }
+        public Color Color { get; protected set; }
+        public Position Position { get; set; }
         public int NumberOfMoves { get; protected set; }
 
         //Constructors
