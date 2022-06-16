@@ -1,5 +1,5 @@
 ﻿using System;
-using Chessboard.Entities;
+using Chess_Console.Chessboard.Entities;
 
 namespace Chess_Console
 {
@@ -7,9 +7,9 @@ namespace Chess_Console
     {
         public static void PrintBoard(Board board)
         {
-            for (int i = 0; i < board.Lines; i++)
+            for (int i = 0; i < board.TotalLines; i++)
             {
-                for (int j = 0; j < board.Columns; j++)
+                for (int j = 0; j < board.TotalColumns; j++)
                 {
                     if (board.Pieces[i, j] == null)
                     {

@@ -1,7 +1,7 @@
-﻿using Chessboard.Entities;
-using Chessboard.Enums;
+﻿using Chess_Console.Chessboard.Entities;
+using Chess_Console.Chessboard.Enums;
 
-namespace Chessgame.Entities
+namespace Chess_Console.Chessgame.Entities
 {
     class King : Piece
     {

@@ -1,12 +1,12 @@
-﻿using Chessboard.Exceptions;
+﻿using Chess_Console.Chessboard.Exceptions;
 
-namespace Chessboard.Entities
+namespace Chess_Console.Chessboard.Entities
 {
     class Board
     {
         //Variables
-        public int Lines { get; set; }
-        public int Columns { get; set; }
+        public int TotalLines { get; private set; }
+        public int TotalColumns { get; private set; }
         public Piece[,] Pieces { get; private set; }
 
         //Constructors
@@ -14,11 +14,11 @@ namespace Chessboard.Entities
         {
         }
 
-        public Board(int lines, int columns)
+        public Board(int totalLines, int totalColumns)
         {
-            Lines = lines;
-            Columns = columns;
-            Pieces = new Piece[lines, columns];
+            TotalLines = totalLines;
+            TotalColumns = totalColumns;
+            Pieces = new Piece[totalLines, totalColumns];
         }
 
         //Methods
@@ -42,7 +42,7 @@ namespace Chessboard.Entities
         #region Validate Position
         private bool ValidPosition(Position position)
         {
-            if (position.Line >= 0 && position.Column >= 0 && position.Line < Lines && position.Column < Columns)
+            if (position.Line >= 0 && position.Column >= 0 && position.Line < TotalLines && position.Column < TotalColumns)
             {
                 return true;
             }

@@ -1,12 +1,12 @@
-﻿using Chessboard.Enums;
+﻿using Chess_Console.Chessboard.Enums;
 
-namespace Chessboard.Entities
+namespace Chess_Console.Chessboard.Entities
 {
     class Piece
     {
         //Variables
-        public Board Board { get; protected set; }
-        public Color Color { get; protected set; }
+        public Board Board { get; set; }
+        public Color Color { get; set; }
         public Position Position { get; set; }
         public int NumberOfMoves { get; protected set; }
 

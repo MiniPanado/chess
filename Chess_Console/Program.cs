@@ -1,8 +1,8 @@
 ﻿using System;
-using Chessboard.Entities;
-using Chessboard.Enums;
-using Chessboard.Exceptions;
-using Chessgame.Entities;
+using Chess_Console.Chessboard.Entities;
+using Chess_Console.Chessboard.Enums;
+using Chess_Console.Chessboard.Exceptions;
+using Chess_Console.Chessgame.Entities;
 
 namespace Chess_Console
 {
