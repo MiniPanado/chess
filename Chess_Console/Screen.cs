@@ -1,6 +1,7 @@
 ﻿using System;
 using Chess_Console.Chessboard.Entities;
 using Chess_Console.Chessboard.Enums;
+using Chess_Console.Chessgame.Entities;
 
 namespace Chess_Console
 {
@@ -43,6 +44,15 @@ namespace Chess_Console
                 Console.Write(piece);
                 Console.ForegroundColor = ConsoleColor.Gray;
             }
+        }
+
+        public static Position ReadChessPosition()
+        {
+            string s = Console.ReadLine();
+            char column = s[0];
+            int line = int.Parse(s[1] + "");
+
+            return new ChessPosition(column, line).ToPosition();
         }
     }
 }

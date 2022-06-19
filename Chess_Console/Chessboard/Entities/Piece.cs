@@ -5,10 +5,10 @@ namespace Chess_Console.Chessboard.Entities
     class Piece
     {
         //Variables
-        public Board Board { get; set; }
-        public Color Color { get; set; }
+        public Board Board { get; private set; }
+        public Color Color { get; private set; }
         public Position Position { get; set; }
-        public int NumberOfMoves { get; protected set; }
+        public int NumberOfMoves { get; private set; }
 
         //Constructors
         public Piece()
@@ -19,6 +19,12 @@ namespace Chess_Console.Chessboard.Entities
         {
             Board = board;
             Color = color;
+        }
+
+        //Methods
+        public void IncreaseNumberOfMoves()
+        {
+            NumberOfMoves++;
         }
     }
 }

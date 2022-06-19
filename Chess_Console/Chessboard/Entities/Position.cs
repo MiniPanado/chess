@@ -24,11 +24,5 @@ namespace Chess_Console.Chessboard.Entities
         {
             return $"{Line}, {Column}";
         }
-
-        //Methods
-        public Position ToPosition(ChessPosition chessPosition)
-        {
-            return new Position(8 - chessPosition.Line, chessPosition.Column - 'a');
-        }
     }
 }

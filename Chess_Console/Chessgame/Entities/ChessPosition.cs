@@ -1,4 +1,6 @@
-﻿namespace Chess_Console.Chessgame.Entities
+﻿using Chess_Console.Chessboard.Entities;
+
+namespace Chess_Console.Chessgame.Entities
 {
     class ChessPosition
     {
@@ -21,6 +23,12 @@
         public override string ToString()
         {
             return $"{Column}{Line}";
+        }
+
+        //Methods
+        public Position ToPosition()
+        {
+            return new Position(8 - Line, Column - 'a');
         }
     }
 }

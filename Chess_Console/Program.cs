@@ -12,14 +12,20 @@ namespace Chess_Console
         {
             try
             {
-                Board board = new Board(8, 8);
+                ChessMatch chessMatch = new ChessMatch();
 
-                board.PlacePiece(new King(board, Color.White), new Position(0, 3));
-                board.PlacePiece(new King(board, Color.Red), new Position(7, 3));
+                while (!chessMatch.Finished)
+                {
+                    Console.Clear();
+                    Screen.PrintBoard(chessMatch.Board);
 
-                Screen.PrintBoard(board);
+                    Console.Write("Origin: ");
+                    Position origin = Screen.ReadChessPosition();
+                    Console.Write("Destination: ");
+                    Position destination = Screen.ReadChessPosition();
 
-                Console.ReadKey();
+                    chessMatch.ExecutesMovement(origin, destination);
+                }
             }
             catch (BoardException e)
             {
