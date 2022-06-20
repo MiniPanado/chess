@@ -5,7 +5,7 @@ namespace Chess_Console.Chessboard.Entities
     class Position
     {
         //Variables
-        public int Line { get; private set; }
+        public int Row { get; private set; }
         public int Column { get; private set; }
 
         //Constructors
@@ -13,16 +13,23 @@ namespace Chess_Console.Chessboard.Entities
         {
         }
 
-        public Position(int line, int column)
+        public Position(int row, int column)
         {
-            Line = line;
+            Row = row;
             Column = column;
         }
 
         //Overrides
         public override string ToString()
         {
-            return $"{Line}, {Column}";
+            return $"{Row}, {Column}";
+        }
+
+        //Methods
+        public void SetValues(int row, int column)
+        {
+            Row = row;
+            Column = column;
         }
     }
 }

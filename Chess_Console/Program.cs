@@ -20,9 +20,9 @@ namespace Chess_Console
                     Screen.PrintBoard(chessMatch.Board);
 
                     Console.Write("Origin: ");
-                    Position origin = Screen.ReadChessPosition();
+                    Position origin = Screen.ReadChessPosition().ToPosition();
                     Console.Write("Destination: ");
-                    Position destination = Screen.ReadChessPosition();
+                    Position destination = Screen.ReadChessPosition().ToPosition();
 
                     chessMatch.ExecutesMovement(origin, destination);
                 }

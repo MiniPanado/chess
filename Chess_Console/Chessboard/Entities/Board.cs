@@ -5,8 +5,8 @@ namespace Chess_Console.Chessboard.Entities
     class Board
     {
         //Variables
-        public int TotalLines { get; private set; }
-        public int TotalColumns { get; private set; }
+        public int Rows { get; private set; }
+        public int Columns { get; private set; }
         public Piece[,] Pieces { get; private set; }
 
         //Constructors
@@ -14,11 +14,16 @@ namespace Chess_Console.Chessboard.Entities
         {
         }
 
-        public Board(int totalLines, int totalColumns)
+        public Board(int rows, int columns)
         {
-            TotalLines = totalLines;
-            TotalColumns = totalColumns;
-            Pieces = new Piece[totalLines, totalColumns];
+            if (rows < 1 || columns < 1)
+            {
+                throw new BoardException("Error creating board: there must be at least 1 row and 1 column");
+            }
+
+            Rows = rows;
+            Columns = columns;
+            Pieces = new Piece[rows, columns];
         }
 
         //Methods
@@ -27,24 +32,35 @@ namespace Chess_Console.Chessboard.Entities
             return Pieces[position.Line, position.Column];
         }
 
+        public Piece GetPiece(int row, int column)
+        {
+            return Pieces[row, column];
+        }
+
         public void PlacePiece(Piece piece, Position position)
         {
             //Exceptions
-            if (position.Line < 0 || position.Column < 0 || position.Line >= TotalLines || position.Column >= TotalColumns)
+            if (ThereIsAPiece(position))
             {
-                throw new BoardException("Invalid position!");
+                throw new BoardException("There is already a piece on position " + position);
             }
-            if (GetPiece(position) != null)
+            if (!PositionExists(position))
             {
-                throw new BoardException("There is already a piece in this position!");
+                throw new BoardException("Position not on the board");
             }
 
-            piece.Position = position;
             Pieces[position.Line, position.Column] = piece;
+            piece.Position = position;
         }
 
         public Piece RemovePiece(Position position)
         {
+            //Exceptions
+            if (!PositionExists(position))
+            {
+                throw new BoardException("Position not on the board");
+            }
+
             if (GetPiece(position) == null)
             {
                 return null;
@@ -57,6 +73,22 @@ namespace Chess_Console.Chessboard.Entities
 
                 return capturedPiece;
             }
+        }
+
+        //Methods Exceptions
+        private bool PositionExists(int row, int column)
+        {
+            return row >= 0 && row < Rows && column >= 0 && column < Columns;
+        }
+
+        public bool PositionExists(Position position)
+        {
+            return PositionExists(position.Line, position.Column);
+        }
+
+        public bool ThereIsAPiece(Position position)
+        {
+            return GetPiece(position) != null;
         }
     }
 }

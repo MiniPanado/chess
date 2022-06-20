@@ -2,29 +2,45 @@
 
 namespace Chess_Console.Chessboard.Entities
 {
-    class Piece
+    abstract class Piece
     {
         //Variables
         public Board Board { get; private set; }
-        public Color Color { get; private set; }
-        public Position Position { get; set; }
-        public int NumberOfMoves { get; private set; }
+        public Position Position { get; protected set; }
 
         //Constructors
         public Piece()
         {
         }
 
-        public Piece(Board board, Color color)
+        public Piece(Board board)
         {
             Board = board;
-            Color = color;
         }
 
         //Methods
-        public void IncreaseNumberOfMoves()
+        public abstract bool[,] PossibleMoves();
+
+        public bool GetPossibleMove(Position position)
         {
-            NumberOfMoves++;
+            return PossibleMoves()[position.Line, position.Column];
+        }
+
+        public bool IsThereAnyPossibleMove()
+        {
+            bool[,] mat = PossibleMoves();
+            for (int i = 0; i < mat.Length; i++)
+            {
+                for (int j = 0; j < mat.Length; j++)
+                {
+                    if (mat[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }
