@@ -1,4 +1,4 @@
-﻿using Chessboard.Entities;
+﻿/*using Chessboard.Entities;
 using Chessboard.Enums;
 
 namespace Chessgame.Entities
@@ -16,5 +16,5 @@ namespace Chessgame.Entities
             return "K";
         }
     }
-}
+}*/
 

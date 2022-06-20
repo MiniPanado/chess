@@ -3,18 +3,18 @@ using Chessboard.Entities;
 using Chessboard.Enums;
 using Chessgame.Entities;
 
-namespace Chess_Console
+namespace Program
 {
     class Screen
     {
-        public static void PrintBoard(Board board)
+        public static void PrintBoard()
         {
             for (int i = 0; i < board.Rows; i++)
             {
                 Console.Write($"{board.Rows - i} ");
                 for (int j = 0; j < board.Columns; j++)
                 {
-                    PrintPiece(board.GetPiece(i, j));
+                    PrintPiece();
                 }
                 Console.WriteLine();
             }
@@ -22,7 +22,7 @@ namespace Chess_Console
             Console.WriteLine("  a b c d e f g h");
         }
 
-        public static void PrintBoard(Board board, bool[,] possibleMoves)
+        public static void PrintBoard(, bool[,] possibleMoves)
         {
             for (int i = 0; i < board.Rows; i++)
             {
@@ -38,7 +38,7 @@ namespace Chess_Console
                         Console.BackgroundColor = ConsoleColor.Black;
                     }
 
-                    PrintPiece(board.GetPiece(i, j));
+                    PrintPiece();
                 }
 
                 Console.BackgroundColor = ConsoleColor.Black;

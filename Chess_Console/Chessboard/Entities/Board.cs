@@ -12,9 +12,14 @@ namespace Chessboard.Entities
         //Constructors
         public Board(int rows, int columns)
         {
+            //Exceptions
             if (rows < 1 || columns < 1)
             {
                 throw new BoardException("Error creating board: there must be at least 1 row and 1 column");
+            }
+            if (rows != columns)
+            {
+                throw new BoardException("Error creating board: the number of rows has to be equal to the number of columns");
             }
 
             Rows = rows;
@@ -69,7 +74,7 @@ namespace Chessboard.Entities
             }
         }
 
-        //Methods Exceptions
+        //Methods
         private bool PositionExists(int row, int column)
         {
             return row >= 0 && row < Rows && column >= 0 && column < Columns;

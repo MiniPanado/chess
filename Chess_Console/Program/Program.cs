@@ -2,8 +2,9 @@
 using Chessboard.Entities;
 using Chessboard.Exceptions;
 using Chessgame.Entities;
+using Chessgame.Exceptions;
 
-namespace Chess_Console
+namespace Program
 {
     class Program
     {
@@ -17,9 +18,12 @@ namespace Chess_Console
                 {
                     Console.Clear();
                     Screen.PrintBoard(chessMatch.Board);
+                    Console.WriteLine($"\nTurn: {chessMatch.Turn}");
+                    Console.WriteLine($"\nAwaiting move: {chessMatch.CurrentPlayer}");
 
                     Console.Write("Origin: ");
                     Position origin = Screen.ReadChessPosition().ToPosition();
+                    chessMatch.ValidateOriginPosition(origin);
 
                     bool[,] possibleMoves = chessMatch.Board.GetPiece(origin).PossibleMoves();
 
@@ -28,13 +32,18 @@ namespace Chess_Console
 
                     Console.Write("Destination: ");
                     Position destination = Screen.ReadChessPosition().ToPosition();
+                    chessMatch.ValidateDestinationPosition(origin, destination);
 
-                    chessMatch.MakeMove(origin, destination);
+                    chessMatch.PerformsMove(origin, destination);
                 }
             }
             catch (BoardException e)
             {
                 Console.WriteLine($"Board Error: {e.Message}");
+            }
+            catch (GameException e)
+            {
+                Console.WriteLine($"Game Error: {e.Message}");
             }
         }
     }

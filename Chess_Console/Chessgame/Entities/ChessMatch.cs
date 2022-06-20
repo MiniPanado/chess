@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Chessboard.Entities;
 using Chessboard.Enums;
+using Chessgame.Exceptions;
 
 namespace Chessgame.Entities
 {
@@ -25,44 +26,58 @@ namespace Chessgame.Entities
         }
 
         //Methods
-        public void MakeMove(Position origin, Position destination)
+        private void MakeMove(Position origin, Position destination)
         {
             Piece piece = Board.RemovePiece(origin);
             Piece capturedPiece = Board.RemovePiece(destination);
             Board.PlacePiece(piece, destination);
         }
 
+        private void ChangePlayer()
+        {
+            if (CurrentPlayer == Color.White)
+            {
+                CurrentPlayer = Color.Red;
+            }
+            else
+            {
+                CurrentPlayer = Color.White;
+            }
+        }
+
+        public void ValidateOriginPosition(Position position)
+        {
+            //Exceptions
+            if (Board.GetPiece(position) == null)
+            {
+                throw new GameException("There is no piece in the chosen origin position");
+            }
+            if (!Board.GetPiece(position).IsThereAnyPossibleMove())
+            {
+                throw new GameException("There are no movements possible for the piece of origin chosen!");
+            }
+        }
+
+        public void ValidateDestinationPosition(Position origin, Position destination)
+        {
+            //Exceptions
+            if (Board.GetPiece(origin).GetPossibleMove(destination))
+            {
+                throw new GameException("Invalid destination position!");
+            }
+        }
+
+        public void PerformsMove(Position origin, Position destination)
+        {
+            MakeMove(origin, destination);
+            Turn++;
+        }
+
         private void PlaceInitialPieces()
         {
             //White Pieces
             Board.PlacePiece(new Rook(Board, Color.White), new Position(0, 0));
-            Board.PlacePiece(new Knight(Board, Color.White), new Position(0, 1));
-            Board.PlacePiece(new Bishop(Board, Color.White), new Position(0, 2));
-            Board.PlacePiece(new King(Board, Color.White), new Position(0, 3));
-            Board.PlacePiece(new Queen(Board, Color.White), new Position(0, 4));
-            Board.PlacePiece(new Bishop(Board, Color.White), new Position(0, 5));
-            Board.PlacePiece(new Knight(Board, Color.White), new Position(0, 6));
-            Board.PlacePiece(new Rook(Board, Color.White), new Position(0, 7));
-
-            for (int i = 0; i < 8; i++)
-            {
-                Board.PlacePiece(new Pawn(Board, Color.White), new Position(1, i));
-            }
-
-            //Red Pieces
-            Board.PlacePiece(new Rook(Board, Color.Red), new Position(7, 0));
-            Board.PlacePiece(new Knight(Board, Color.Red), new Position(7, 1));
-            Board.PlacePiece(new Bishop(Board, Color.Red), new Position(7, 2));
-            Board.PlacePiece(new King(Board, Color.Red), new Position(7, 3));
-            Board.PlacePiece(new Queen(Board, Color.Red), new Position(7, 4));
-            Board.PlacePiece(new Bishop(Board, Color.Red), new Position(7, 5));
-            Board.PlacePiece(new Knight(Board, Color.Red), new Position(7, 6));
-            Board.PlacePiece(new Rook(Board, Color.Red), new Position(7, 7));
-
-            for (int i = 0; i < 8; i++)
-            {
-                Board.PlacePiece(new Pawn(Board, Color.Red), new Position(6, i));
-            }
+            
         }
     }
 }
