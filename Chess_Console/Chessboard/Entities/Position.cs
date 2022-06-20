@@ -22,6 +22,26 @@ namespace Chessboard.Entities
         }
 
         //Methods
+        public void IncreaseRow()
+        {
+            Row++;
+        }
+
+        public void DecreaseRow()
+        {
+            Row--;
+        }
+
+        public void IncreaseColumn()
+        {
+            Column++;
+        }
+
+        public void DecreaseColumn()
+        {
+            Column--;
+        }
+
         public void SetValues(int row, int column)
         {
             Row = row;

@@ -22,24 +22,50 @@ namespace Chess_Console
             Console.WriteLine("  a b c d e f g h");
         }
 
-        private static void PrintPiece(Piece piece)
+        public static void PrintBoard(Board board, bool[,] possibleMoves)
         {
-            if (piece == null)
+            for (int i = 0; i < board.Rows; i++)
+            {
+                Console.Write($"{board.Rows - i} ");
+                for (int j = 0; j < board.Columns; j++)
+                {
+                    if (possibleMoves[i, j])
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = ConsoleColor.Black;
+                    }
+
+                    PrintPiece(board.GetPiece(i, j));
+                }
+
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("  a b c d e f g h");
+        }
+
+        private static void PrintPiece(ChessPiece chessPiece)
+        {
+            if (chessPiece == null)
             {
                 Console.Write("- ");
             }
             else
             {
-                if (piece.Color == Color.White)
+                if (chessPiece.Color == Color.White)
                 {
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write(piece);
+                    Console.Write(chessPiece);
                     Console.ForegroundColor = ConsoleColor.Gray;
                 }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write(piece);
+                    Console.Write(chessPiece);
                     Console.ForegroundColor = ConsoleColor.Gray;
                 }
 

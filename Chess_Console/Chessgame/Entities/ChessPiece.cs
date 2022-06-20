@@ -3,7 +3,7 @@ using Chessboard.Enums;
 
 namespace Chessgame.Entities
 {
-    class ChessPiece : Piece
+    abstract class ChessPiece : Piece
     {
         //Variables
         public Color Color { get; private set; }
@@ -29,6 +29,13 @@ namespace Chessgame.Entities
         public ChessPosition GetChessPosition()
         {
             return ChessPosition.FromPosition(Position);
+        }
+
+        //Methods
+        protected bool CanMove(Position position)
+        {
+            ChessPiece chessPiece = (ChessPiece)Board.GetPiece(position);
+            return chessPiece == null || chessPiece.Color != Color;
         }
 
         protected bool IsThereOpponentPiece(Position position)

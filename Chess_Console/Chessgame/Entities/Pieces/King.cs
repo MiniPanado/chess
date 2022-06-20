@@ -16,13 +16,6 @@ namespace Chessgame.Entities
             return "K";
         }
 
-        //Methods
-        private bool CanMove(Position position)
-        {
-            ChessPiece chessPiece = (ChessPiece)Board.GetPiece(position);
-            return chessPiece == null || chessPiece.Color != Color;
-        }
-
         public override bool[,] PossibleMoves()
         {
             bool[,] mat = new bool[Board.Rows, Board.Columns];

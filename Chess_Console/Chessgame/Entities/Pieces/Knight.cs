@@ -3,13 +3,9 @@ using Chessboard.Enums;
 
 namespace Chessgame.Entities
 {
-    class Knight : Piece
+    class Knight : ChessPiece
     {
         //Constructors
-        public Knight()
-        {
-        }
-
         public Knight(Board board, Color color) : base(board, color)
         {
         }

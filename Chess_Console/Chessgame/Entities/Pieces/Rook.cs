@@ -3,13 +3,9 @@ using Chessboard.Enums;
 
 namespace Chessgame.Entities
 {
-    class Rook : Piece
+    class Rook : ChessPiece
     {
         //Constructors
-        public Rook()
-        {
-        }
-
         public Rook(Board board, Color color) : base(board, color)
         {
         }
@@ -22,56 +18,56 @@ namespace Chessgame.Entities
 
         public override bool[,] PossibleMoves()
         {
-            bool[,] mat = new bool[Board.TotalLines, Board.TotalColumns];
+            bool[,] mat = new bool[Board.Rows, Board.Columns];
 
-            Position pos = new Position();
+            Position pos = new Position(0, 0);
 
-            //Top
-            pos.SetValues(Position.Line - 1, Position.Column);
-            while(Board.ValidPosition(pos) && CanMove(pos))
+            //Above
+            pos.SetValues(Position.Row - 1, Position.Column);
+            while(Board.PositionExists(pos) && !Board.ThereIsAPiece(pos))
             {
-                mat[pos.Line, pos.Column] = true;
-                if (Board.GetPiece(pos) != null && Board.GetPiece(pos).Color != Color)
-                {
-                    break;
-                }
-                pos.SetValues(pos.Line - 1, pos.Column);
+                mat[pos.Row, pos.Column] = true;
+                pos.DecreaseRow();
+            }
+            if (Board.PositionExists(pos) && IsThereOpponentPiece(pos))
+            {
+                mat[pos.Row, pos.Column] = true;
             }
 
             //Right
-            pos.SetValues(Position.Line, Position.Column + 1);
-            while (Board.ValidPosition(pos) && CanMove(pos))
+            pos.SetValues(Position.Row, Position.Column + 1);
+            while (Board.PositionExists(pos) && !Board.ThereIsAPiece(pos))
             {
-                mat[pos.Line, pos.Column] = true;
-                if (Board.GetPiece(pos) != null && Board.GetPiece(pos).Color != Color)
-                {
-                    break;
-                }
-                pos.SetValues(pos.Line, pos.Column + 1);
+                mat[pos.Row, pos.Column] = true;
+                pos.IncreaseColumn();
+            }
+            if (Board.PositionExists(pos) && IsThereOpponentPiece(pos))
+            {
+                mat[pos.Row, pos.Column] = true;
             }
 
-            //Bottom
-            pos.SetValues(Position.Line + 1, Position.Column);
-            while (Board.ValidPosition(pos) && CanMove(pos))
+            //Bellow
+            pos.SetValues(Position.Row + 1, Position.Column);
+            while (Board.PositionExists(pos) && !Board.ThereIsAPiece(pos))
             {
-                mat[pos.Line, pos.Column] = true;
-                if (Board.GetPiece(pos) != null && Board.GetPiece(pos).Color != Color)
-                {
-                    break;
-                }
-                pos.SetValues(pos.Line + 1, pos.Column);
+                mat[pos.Row, pos.Column] = true;
+                pos.IncreaseRow();
+            }
+            if (Board.PositionExists(pos) && IsThereOpponentPiece(pos))
+            {
+                mat[pos.Row, pos.Column] = true;
             }
 
             //Left
-            pos.SetValues(Position.Line, Position.Column - 1);
-            while (Board.ValidPosition(pos) && CanMove(pos))
+            pos.SetValues(Position.Row, Position.Column - 1);
+            while (Board.PositionExists(pos) && !Board.ThereIsAPiece(pos))
             {
-                mat[pos.Line, pos.Column] = true;
-                if (Board.GetPiece(pos) != null && Board.GetPiece(pos).Color != Color)
-                {
-                    break;
-                }
-                pos.SetValues(pos.Line, pos.Column - 1);
+                mat[pos.Row, pos.Column] = true;
+                pos.DecreaseColumn();
+            }
+            if (Board.PositionExists(pos) && IsThereOpponentPiece(pos))
+            {
+                mat[pos.Row, pos.Column] = true;
             }
 
             return mat;
