@@ -11,8 +11,14 @@ namespace Program
         public static void PrintChessMatch(ChessMatch chessMatch)
         {
             Screen.PrintBoard(chessMatch.Board);
+            PrintCapturedPieces(chessMatch);
             Console.WriteLine($"\nTurn: {chessMatch.Turn}");
             Console.WriteLine($"\nAwaiting move: {chessMatch.CurrentPlayer}");
+
+            if (chessMatch.Check)
+            {
+                Console.WriteLine("CHECK!");
+            }
         }
 
         public static void PrintBoard()

@@ -11,6 +11,7 @@ namespace Chessgame.Entities
         public Board Board { get; private set; }
         public int Turn { get; private set; }
         public Color CurrentPlayer { get; private set; }
+        public bool Check { get; private set; }
         public HashSet<Piece> PiecesOnTheBoard { get; private set; }
         public HashSet<Piece> CapturedPieces { get; private set; }
 
@@ -28,7 +29,7 @@ namespace Chessgame.Entities
         }
 
         //Methods
-        private void MakeMove(Position origin, Position destination)
+        private Piece MakeMove(Position origin, Position destination)
         {
             Piece piece = Board.RemovePiece(origin);
             Piece capturedPiece = Board.RemovePiece(destination);
@@ -38,6 +39,20 @@ namespace Chessgame.Entities
             {
                 CapturedPieces.Add(capturedPiece);
             }
+
+            return capturedPiece;
+        }
+
+        private void UndoMove(Position origin, Position destination, Piece capturedPiece)
+        {
+            Piece piece = Board.RemovePiece(destination);
+            if (capturedPiece != null)
+            {
+                Board.PlacePiece(capturedPiece, destination);
+                CapturedPieces.Remove(capturedPiece);
+            }
+
+            Board.PlacePiece(piece, origin);
         }
 
         private void ChangePlayer()
@@ -74,9 +89,72 @@ namespace Chessgame.Entities
             }
         }
 
+        private Color OpponentColor(Color color)
+        {
+            if (color == Color.White)
+            {
+                return Color.Red;
+            }
+            else
+            {
+                return Color.White;
+            }
+        }
+
+        private Piece King(Color color)
+        {
+            foreach (Piece king in PiecesOnTheBoard)
+            {
+                if (king is King)
+                {
+                    return king;
+                }
+            }
+
+            return null;
+        }
+
+        private bool TestCheck(Color color)
+        {
+            Piece king = King(color);
+            if (king == null)
+            {
+                throw new GameException($"There is no {color} king on the board!");
+            }
+
+            foreach (Piece opponentPieces in GetPiecesOnTheBoard(OpponentColor(color)))
+            {
+                bool[,] mat = opponentPieces.PossibleMoves();
+                if (mat[king.Position.Row, king.Position.Column])
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public void PerformsMove(Position origin, Position destination)
         {
-            MakeMove(origin, destination);
+            Piece capturedPiece = MakeMove(origin, destination);
+
+            //Exceptions
+            if (TestCheck(CurrentPlayer))
+            {
+                UndoMove(origin, destination, capturedPiece);
+                throw new GameException("You cannot put yourself in check!");
+            }
+
+            //Opponent in check
+            if (TestCheck(OpponentColor(CurrentPlayer)))
+            {
+                Check = true;
+            }
+            else
+            {
+                Check = false;
+            }
+
             Turn++;
             ChangePlayer();
         }
