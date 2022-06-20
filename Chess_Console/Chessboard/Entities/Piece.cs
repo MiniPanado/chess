@@ -1,6 +1,4 @@
-﻿using Chessboard.Enums;
-
-namespace Chessboard.Entities
+﻿namespace Chessboard.Entities
 {
     abstract class Piece
     {
@@ -9,10 +7,6 @@ namespace Chessboard.Entities
         public Position Position { get; protected set; }
 
         //Constructors
-        public Piece()
-        {
-        }
-
         public Piece(Board board)
         {
             Board = board;
@@ -23,7 +17,7 @@ namespace Chessboard.Entities
 
         public bool GetPossibleMove(Position position)
         {
-            return PossibleMoves()[position.Line, position.Column];
+            return PossibleMoves()[Position.Row, Position.Column];
         }
 
         public bool IsThereAnyPossibleMove()

@@ -3,15 +3,15 @@ using Chessboard.Enums;
 
 namespace Chessgame.Entities
 {
-    class Bishop : Piece
+    class Bishop : ChessPiece
     {
-        //Constructors
-        public Bishop()
-        {
-        }
+        //Variables
+        private ChessMatch ChessMatch;
 
-        public Bishop(Board board, Color color) : base(board, color)
+        //Constructors
+        public Bishop(Board board, Color color, ChessMatch chessMatch) : base(board, color)
         {
+            ChessMatch = chessMatch;
         }
 
         //Overrides

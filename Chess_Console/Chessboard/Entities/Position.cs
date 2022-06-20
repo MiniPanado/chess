@@ -9,10 +9,6 @@ namespace Chessboard.Entities
         public int Column { get; private set; }
 
         //Constructors
-        public Position() 
-        {
-        }
-
         public Position(int row, int column)
         {
             Row = row;

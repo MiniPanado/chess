@@ -12,18 +12,17 @@ namespace Chess_Console
             try
             {
                 ChessMatch chessMatch = new ChessMatch();
-
-                while (!chessMatch.Finished)
+                int i = 1;
+                while (i > 0)
                 {
                     Console.Clear();
                     Screen.PrintBoard(chessMatch.Board);
-
                     Console.Write("Origin: ");
                     Position origin = Screen.ReadChessPosition().ToPosition();
                     Console.Write("Destination: ");
                     Position destination = Screen.ReadChessPosition().ToPosition();
 
-                    chessMatch.ExecutesMovement(origin, destination);
+                    chessMatch.MakeMove(origin, destination);
                 }
             }
             catch (BoardException e)

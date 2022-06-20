@@ -3,13 +3,9 @@ using Chessboard.Enums;
 
 namespace Chessgame.Entities
 {
-    class King : Piece
+    class King : ChessPiece
     {
         //Constructors
-        public King()
-        {
-        }
-
         public King(Board board, Color color) : base(board, color)
         {
         }
@@ -20,66 +16,73 @@ namespace Chessgame.Entities
             return "K";
         }
 
+        //Methods
+        private bool CanMove(Position position)
+        {
+            ChessPiece chessPiece = (ChessPiece)Board.GetPiece(position);
+            return chessPiece == null || chessPiece.Color != Color;
+        }
+
         public override bool[,] PossibleMoves()
         {
-            bool[,] mat = new bool[Board.TotalLines, Board.TotalColumns];
+            bool[,] mat = new bool[Board.Rows, Board.Columns];
 
-            Position pos = new Position();
+            Position pos = new Position(0, 0);
 
             //Top right corner
-            pos.SetValues(Position.Line - 1, Position.Column - 1);
-            if (!Board.ValidPosition(pos) && CanMove(pos))
+            pos.SetValues(Position.Row - 1, Position.Column - 1);
+            if (Board.PositionExists(pos) && CanMove(pos))
             {
-                mat[pos.Line, pos.Column] = true;
+                mat[pos.Row, pos.Column] = true;
             }
 
             //Top
-            pos.SetValues(Position.Line - 1, Position.Column);
-            if (!Board.ValidPosition(pos) && CanMove(pos))
+            pos.SetValues(Position.Row - 1, Position.Column);
+            if (Board.PositionExists(pos) && CanMove(pos))
             {
-                mat[pos.Line, pos.Column] = true;
+                mat[pos.Row, pos.Column] = true;
             }
 
             //Top right corner
-            pos.SetValues(Position.Line - 1, Position.Column + 1);
-            if (!Board.ValidPosition(pos) && CanMove(pos))
+            pos.SetValues(Position.Row - 1, Position.Column + 1);
+            if (Board.PositionExists(pos) && CanMove(pos))
             {
-                mat[pos.Line, pos.Column] = true;
+                mat[pos.Row, pos.Column] = true;
             }
 
             //Right
-            pos.SetValues(Position.Line, Position.Column + 1);
-            if (!Board.ValidPosition(pos) && CanMove(pos))
+            pos.SetValues(Position.Row, Position.Column + 1);
+            if (Board.PositionExists(pos) && CanMove(pos))
             {
-                mat[pos.Line, pos.Column] = true;
+                mat[pos.Row, pos.Column] = true;
             }
 
             //Bottom right corner
-            pos.SetValues(Position.Line + 1, Position.Column + 1);
-            if (!Board.ValidPosition(pos) && CanMove(pos))
+            pos.SetValues(Position.Row + 1, Position.Column + 1);
+            if (Board.PositionExists(pos) && CanMove(pos))
             {
-                mat[pos.Line, pos.Column] = true;
+                mat[pos.Row, pos.Column] = true;
             }
 
             //Bottom
-            pos.SetValues(Position.Line + 1, Position.Column);
-            if (!Board.ValidPosition(pos) && CanMove(pos))
+            pos.SetValues(Position.Row + 1, Position.Column);
+            if (Board.PositionExists(pos) && CanMove(pos))
             {
-                mat[pos.Line, pos.Column] = true;
+                mat[pos.Row, pos.Column] = true;
             }
 
             //Bottom left corner
-            pos.SetValues(Position.Line + 1, Position.Column - 1);
-            if (!Board.ValidPosition(pos) && CanMove(pos))
+            pos.SetValues(Position.Row + 1, Position.Column - 1);
+            if (Board.PositionExists(pos) && CanMove(pos))
             {
-                mat[pos.Line, pos.Column] = true;
+                mat[pos.Row, pos.Column] = true;
             }
 
             //Left
-            pos.SetValues(Position.Line, Position.Column - 1);
-            if (!Board.ValidPosition(pos) && CanMove(pos))
+            pos.SetValues(Position.Row, Position.Column - 1);
+            if (Board.PositionExists(pos) && CanMove(pos))
             {
-                mat[pos.Line, pos.Column] = true;
+                mat[pos.Row, pos.Column] = true;
             }
 
             return mat;

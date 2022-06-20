@@ -1,4 +1,5 @@
-﻿using Chessboard.Entities;
+﻿using System.Collections.Generic;
+using Chessboard.Entities;
 using Chessboard.Enums;
 
 namespace Chessgame.Entities
@@ -7,25 +8,26 @@ namespace Chessgame.Entities
     {
         //Variables
         public Board Board { get; private set; }
-        public Color CurrentPlayer { get; private set; }
         public int Turn { get; private set; }
-        public bool Finished { get; private set; }
+        public Color CurrentPlayer { get; private set; }
+
+        private List<Piece> PiecesOnTheBoard = new List<Piece>();
+        private List<Piece> CapturedPieces = new List<Piece>();
 
         //Constructors
         public ChessMatch()
         {
             Board = new Board(8, 8);
-            CurrentPlayer = Color.White;
             Turn = 1;
+            CurrentPlayer = Color.White;
 
             PlaceInitialPieces();
         }
 
         //Methods
-        public void ExecutesMovement(Position origin, Position destination)
+        public void MakeMove(Position origin, Position destination)
         {
             Piece piece = Board.RemovePiece(origin);
-            piece.IncreaseNumberOfMoves();
             Piece capturedPiece = Board.RemovePiece(destination);
             Board.PlacePiece(piece, destination);
         }

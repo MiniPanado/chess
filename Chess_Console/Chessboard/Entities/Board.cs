@@ -10,10 +10,6 @@ namespace Chessboard.Entities
         public Piece[,] Pieces { get; private set; }
 
         //Constructors
-        public Board()
-        {
-        }
-
         public Board(int rows, int columns)
         {
             if (rows < 1 || columns < 1)
@@ -29,7 +25,7 @@ namespace Chessboard.Entities
         //Methods
         public Piece GetPiece(Position position)
         {
-            return Pieces[position.Line, position.Column];
+            return Pieces[position.Row, position.Column];
         }
 
         public Piece GetPiece(int row, int column)
@@ -49,8 +45,7 @@ namespace Chessboard.Entities
                 throw new BoardException("Position not on the board");
             }
 
-            Pieces[position.Line, position.Column] = piece;
-            piece.Position = position;
+            Pieces[position.Row, position.Column] = piece;
         }
 
         public Piece RemovePiece(Position position)
@@ -68,8 +63,7 @@ namespace Chessboard.Entities
             else
             {
                 Piece capturedPiece = GetPiece(position);
-                capturedPiece.Position = null;
-                Pieces[position.Line, position.Column] = null;
+                Pieces[position.Row, position.Column] = null;
 
                 return capturedPiece;
             }
@@ -83,7 +77,7 @@ namespace Chessboard.Entities
 
         public bool PositionExists(Position position)
         {
-            return PositionExists(position.Line, position.Column);
+            return PositionExists(position.Row, position.Column);
         }
 
         public bool ThereIsAPiece(Position position)
