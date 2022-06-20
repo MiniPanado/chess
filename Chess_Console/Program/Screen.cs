@@ -13,11 +13,20 @@ namespace Program
             Screen.PrintBoard(chessMatch.Board);
             PrintCapturedPieces(chessMatch);
             Console.WriteLine($"\nTurn: {chessMatch.Turn}");
-            Console.WriteLine($"\nAwaiting move: {chessMatch.CurrentPlayer}");
+            
 
-            if (chessMatch.Check)
+            if (!chessMatch.CheckMate)
             {
-                Console.WriteLine("CHECK!");
+                Console.WriteLine($"Awaiting player: {chessMatch.CurrentPlayer}");
+                
+                if (chessMatch.Check)
+                {
+                    Console.WriteLine("CHECK!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("CHECKMATE!");
             }
         }
 

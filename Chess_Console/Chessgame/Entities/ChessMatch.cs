@@ -12,6 +12,7 @@ namespace Chessgame.Entities
         public int Turn { get; private set; }
         public Color CurrentPlayer { get; private set; }
         public bool Check { get; private set; }
+        public bool CheckMate { get; private    set; }
         public HashSet<Piece> PiecesOnTheBoard { get; private set; }
         public HashSet<Piece> CapturedPieces { get; private set; }
 
@@ -134,6 +135,36 @@ namespace Chessgame.Entities
             return false;
         }
 
+        private bool TestCheckMate(Color color)
+        {
+            foreach (Piece opponentPieces in GetPiecesOnTheBoard(OpponentColor(color)))
+            {
+                bool[,] mat = opponentPieces.PossibleMoves();
+                for (int i = 0; i < mat.Length; i++)
+                {
+                    for (int j = 0; j < mat.Length; j++)
+                    {
+                        if (mat[i, j])
+                        {
+                            Position origin = opponentPieces.Position;
+                            Position destination = new Position(i, j);
+
+                            Piece capturedPiece = MakeMove(origin, destination);
+                            bool testCheck = TestCheck(color);
+                            UndoMove(opponentPieces.Position, destination, capturedPiece);
+
+                            if (!testCheck)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
         public void PerformsMove(Position origin, Position destination)
         {
             Piece capturedPiece = MakeMove(origin, destination);
@@ -145,15 +176,8 @@ namespace Chessgame.Entities
                 throw new GameException("You cannot put yourself in check!");
             }
 
-            //Opponent in check
-            if (TestCheck(OpponentColor(CurrentPlayer)))
-            {
-                Check = true;
-            }
-            else
-            {
-                Check = false;
-            }
+            Check = TestCheck(OpponentColor(CurrentPlayer)); //Opponent in Check
+            CheckMate = TestCheckMate(OpponentColor(CurrentPlayer)); //Opponent in CheckMate
 
             Turn++;
             ChangePlayer();

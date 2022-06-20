@@ -13,8 +13,8 @@ namespace Program
             try
             {
                 ChessMatch chessMatch = new ChessMatch();
-                int i = 1;
-                while (i > 0)
+                
+                while (!chessMatch.CheckMate)
                 {
                     Console.Clear();
 
@@ -25,7 +25,7 @@ namespace Program
                     bool[,] possibleMoves = chessMatch.Board.GetPiece(origin).PossibleMoves();
 
                     Console.Clear();
-                    Screen.PrintBoard(chessMatch.Board, possibleMoves);
+                    Screen.PrintBoard(, possibleMoves);
 
                     Console.Write("Destination: ");
                     Position destination = Screen.ReadChessPosition().ToPosition();
