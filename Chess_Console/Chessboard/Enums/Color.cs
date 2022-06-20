@@ -1,4 +1,4 @@
-﻿namespace Chess_Console.Chessboard.Enums
+﻿namespace Chessboard.Enums
 {
     enum Color
     {

@@ -1,7 +1,7 @@
 ﻿using System;
-using Chess_Console.Chessboard.Entities;
-using Chess_Console.Chessboard.Enums;
-using Chess_Console.Chessgame.Entities;
+using Chessboard.Entities;
+using Chessboard.Enums;
+using Chessgame.Entities;
 
 namespace Chess_Console
 {

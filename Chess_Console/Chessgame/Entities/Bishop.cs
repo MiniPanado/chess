@@ -1,7 +1,7 @@
-﻿using Chess_Console.Chessboard.Entities;
-using Chess_Console.Chessboard.Enums;
+﻿using Chessboard.Entities;
+using Chessboard.Enums;
 
-namespace Chess_Console.Chessgame.Entities
+namespace Chessgame.Entities
 {
     class Bishop : Piece
     {

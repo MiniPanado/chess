@@ -1,6 +1,6 @@
-﻿using Chess_Console.Chessboard.Enums;
+﻿using Chessboard.Enums;
 
-namespace Chess_Console.Chessboard.Entities
+namespace Chessboard.Entities
 {
     abstract class Piece
     {

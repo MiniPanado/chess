@@ -1,6 +1,6 @@
-﻿using Chess_Console.Chessboard.Exceptions;
+﻿using Chessboard.Exceptions;
 
-namespace Chess_Console.Chessboard.Entities
+namespace Chessboard.Entities
 {
     class Board
     {
