@@ -11,9 +11,8 @@ namespace Chessgame.Entities
         public Board Board { get; private set; }
         public int Turn { get; private set; }
         public Color CurrentPlayer { get; private set; }
-
-        private List<Piece> PiecesOnTheBoard = new List<Piece>();
-        private List<Piece> CapturedPieces = new List<Piece>();
+        public HashSet<Piece> PiecesOnTheBoard { get; private set; }
+        public HashSet<Piece> CapturedPieces { get; private set; }
 
         //Constructors
         public ChessMatch()
@@ -21,6 +20,9 @@ namespace Chessgame.Entities
             Board = new Board(8, 8);
             Turn = 1;
             CurrentPlayer = Color.White;
+
+            PiecesOnTheBoard = new HashSet<Piece>();
+            CapturedPieces = new HashSet<Piece>();
 
             PlaceInitialPieces();
         }
@@ -31,6 +33,11 @@ namespace Chessgame.Entities
             Piece piece = Board.RemovePiece(origin);
             Piece capturedPiece = Board.RemovePiece(destination);
             Board.PlacePiece(piece, destination);
+
+            if (capturedPiece != null)
+            {
+                CapturedPieces.Add(capturedPiece);
+            }
         }
 
         private void ChangePlayer()
@@ -71,13 +78,48 @@ namespace Chessgame.Entities
         {
             MakeMove(origin, destination);
             Turn++;
+            ChangePlayer();
+        }
+
+        public HashSet<Piece> GetPiecesOnTheBoard(Color color)
+        {
+            HashSet<Piece> piecesOnTheBoard = new HashSet<Piece>();
+            foreach (ChessPiece chessPiece in PiecesOnTheBoard)
+            {
+                if (chessPiece.Color == color)
+                {
+                    PiecesOnTheBoard.Add(chessPiece);
+                }
+            }
+
+            piecesOnTheBoard.ExceptWith(GetCapturedPieces(color));
+            return piecesOnTheBoard;
+        }
+
+        public HashSet<Piece> GetCapturedPieces(Color color)
+        {
+            HashSet<Piece> capturedPieces = new HashSet<Piece>();
+            foreach (ChessPiece chessPiece in CapturedPieces)
+            {
+                if (chessPiece.Color == color)
+                {
+                    capturedPieces.Add(chessPiece);
+                }
+            }
+
+            return capturedPieces;
+        }
+
+        public void PlaceNewPiece(char column, int row, Piece piece)
+        {
+            Board.PlacePiece(piece, new ChessPosition(column, row).ToPosition());
+            PiecesOnTheBoard.Add(piece);
         }
 
         private void PlaceInitialPieces()
         {
             //White Pieces
-            Board.PlacePiece(new Rook(Board, Color.White), new Position(0, 0));
-            
+            PlaceNewPiece('a', 1, new Rook(Board, Color.White));
         }
     }
 }

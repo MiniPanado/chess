@@ -17,7 +17,8 @@
 
         public bool GetPossibleMove(Position position)
         {
-            return PossibleMoves()[Position.Row, Position.Column];
+            bool[,] possibleMoves = PossibleMoves();
+            return possibleMoves[Position.Row, Position.Column];
         }
 
         public bool IsThereAnyPossibleMove()

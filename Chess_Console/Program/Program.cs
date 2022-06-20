@@ -17,9 +17,6 @@ namespace Program
                 while (i > 0)
                 {
                     Console.Clear();
-                    Screen.PrintBoard(chessMatch.Board);
-                    Console.WriteLine($"\nTurn: {chessMatch.Turn}");
-                    Console.WriteLine($"\nAwaiting move: {chessMatch.CurrentPlayer}");
 
                     Console.Write("Origin: ");
                     Position origin = Screen.ReadChessPosition().ToPosition();

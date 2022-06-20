@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Chessboard.Entities;
 using Chessboard.Enums;
 using Chessgame.Entities;
@@ -7,6 +8,13 @@ namespace Program
 {
     class Screen
     {
+        public static void PrintChessMatch(ChessMatch chessMatch)
+        {
+            Screen.PrintBoard(chessMatch.Board);
+            Console.WriteLine($"\nTurn: {chessMatch.Turn}");
+            Console.WriteLine($"\nAwaiting move: {chessMatch.CurrentPlayer}");
+        }
+
         public static void PrintBoard()
         {
             for (int i = 0; i < board.Rows; i++)
@@ -46,6 +54,28 @@ namespace Program
             }
 
             Console.WriteLine("  a b c d e f g h");
+        }
+
+        private static void PrintCapturedPiecesSets(HashSet<Piece> capturedPieces)
+        {
+            Console.Write("[");
+            foreach (Piece capturedPiece in capturedPieces)
+            {
+                Console.Write($"{capturedPiece} ");
+            }
+            Console.WriteLine("]");
+        }
+
+        private static void PrintCapturedPieces(ChessMatch chessMatch)
+        {
+            Console.WriteLine("Captured pieces: ");
+            Console.Write("White: ");
+            PrintCapturedPiecesSets(chessMatch.GetCapturedPieces(Color.White));
+
+            Console.Write("Black: ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            PrintCapturedPiecesSets(chessMatch.GetCapturedPieces(Color.Red));
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         private static void PrintPiece(ChessPiece chessPiece)
