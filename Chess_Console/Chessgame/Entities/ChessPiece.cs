@@ -32,12 +32,6 @@ namespace Chessgame.Entities
         }
 
         //Methods bool
-        protected bool IsThereTeamPiece(Position position)
-        {
-            ChessPiece chessPiece = (ChessPiece)Board.GetPiece(position);
-            return chessPiece != null || chessPiece.Color == Color;
-        }
-
         protected bool IsThereOpponentPiece(Position position)
         {
             ChessPiece chessPiece = (ChessPiece)Board.GetPiece(position);

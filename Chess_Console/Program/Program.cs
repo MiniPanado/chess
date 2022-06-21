@@ -1,5 +1,5 @@
 ﻿using System;
-using Chessboard.Entities;
+using System.Collections.Generic;
 using Chessboard.Exceptions;
 using Chessgame.Entities;
 using Chessgame.Exceptions;
@@ -10,38 +10,46 @@ namespace Program
     {
         static void Main(string[] args)
         {
-            try
+            ChessMatch chessMatch = new ChessMatch();
+            HashSet<ChessPiece> capturedPieces = new HashSet<ChessPiece>();
+
+            while (!chessMatch.CheckMate)
             {
-                ChessMatch chessMatch = new ChessMatch();
-                
-                while (!chessMatch.CheckMate)
+                try
                 {
                     Console.Clear();
+                    UI.PrintChessMatch(chessMatch, capturedPieces);
 
-                    Console.Write("Origin: ");
-                    Position origin = Screen.ReadChessPosition().ToPosition();
-                    chessMatch.ValidateOriginPosition(origin);
+                    Console.Write("Source: ");
+                    ChessPosition source = UI.ReadChessPosition();
 
-                    bool[,] possibleMoves = chessMatch.Board.GetPiece(origin).PossibleMoves();
+                    bool[,] possibleMoves = chessMatch.PossiblesMoves(source);
 
                     Console.Clear();
-                    Screen.PrintBoard(, possibleMoves);
+                    UI.PrintBoard(chessMatch.GetPieces(), possibleMoves);
 
-                    Console.Write("Destination: ");
-                    Position destination = Screen.ReadChessPosition().ToPosition();
-                    chessMatch.ValidateDestinationPosition(origin, destination);
+                    Console.Write("Target: ");
+                    ChessPosition target = UI.ReadChessPosition();
 
-                    chessMatch.PerformsMove(origin, destination);
+                    ChessPiece capturedPiece = chessMatch.PerformsChessMove(source, target);
+
+                    if (capturedPiece != null)
+                    {
+                        capturedPieces.Add(capturedPiece);  
+                    }
+                }
+                catch (BoardException e)
+                {
+                    Console.WriteLine($"Board Error: {e.Message}");
+                }
+                catch (GameException e)
+                {
+                    Console.WriteLine($"Game Error: {e.Message}");
                 }
             }
-            catch (BoardException e)
-            {
-                Console.WriteLine($"Board Error: {e.Message}");
-            }
-            catch (GameException e)
-            {
-                Console.WriteLine($"Game Error: {e.Message}");
-            }
+
+            Console.Clear();
+            UI.PrintChessMatch(chessMatch, capturedPieces);
         }
     }
 }

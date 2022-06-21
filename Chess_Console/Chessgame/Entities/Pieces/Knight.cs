@@ -13,7 +13,7 @@ namespace Chessgame.Entities
         //Overrides
         public override string ToString()
         {
-            return "K";
+            return "N";
         }
 
         public override bool[,] PossibleMoves()
@@ -24,61 +24,68 @@ namespace Chessgame.Entities
 
             //Top Right Corner
             pos.SetValues(Position.Row - 2, Position.Column + 1);
-            if (Board.PositionExists(pos) && !IsThereTeamPiece(pos))
+            if (Board.PositionExists(pos) && CanMove(pos))
             {
                 mat[pos.Row, pos.Column] = true;
             }
 
             //Top Midle Right Corner
             pos.SetValues(Position.Row - 1, Position.Column + 2);
-            if (Board.PositionExists(pos) && !IsThereTeamPiece(pos))
+            if (Board.PositionExists(pos) && CanMove(pos))
             {
                 mat[pos.Row, pos.Column] = true;
             }
 
             //Bottom Midle Right Corner
             pos.SetValues(Position.Row + 1, Position.Column + 2);
-            if (Board.PositionExists(pos) && !IsThereTeamPiece(pos))
+            if (Board.PositionExists(pos) && CanMove(pos))
             {
                 mat[pos.Row, pos.Column] = true;
             }
 
             //Bottom Right Corner
             pos.SetValues(Position.Row + 2, Position.Column + 1);
-            if (Board.PositionExists(pos) && !IsThereTeamPiece(pos))
+            if (Board.PositionExists(pos) && CanMove(pos))
             {
                 mat[pos.Row, pos.Column] = true;
             }
 
             //Bottom Left Corner
             pos.SetValues(Position.Row + 2, Position.Column - 1);
-            if (Board.PositionExists(pos) && !IsThereTeamPiece(pos))
+            if (Board.PositionExists(pos) && CanMove(pos))
             {
                 mat[pos.Row, pos.Column] = true;
             }
 
             //Bottom Midle Left Corner
             pos.SetValues(Position.Row + 1, Position.Column - 2);
-            if (Board.PositionExists(pos) && !IsThereTeamPiece(pos))
+            if (Board.PositionExists(pos) && CanMove(pos))
             {
                 mat[pos.Row, pos.Column] = true;
             }
 
             //Top Midle Left Corner
             pos.SetValues(Position.Row - 1, Position.Column - 2);
-            if (Board.PositionExists(pos) && !IsThereTeamPiece(pos))
+            if (Board.PositionExists(pos) && CanMove(pos))
             {
                 mat[pos.Row, pos.Column] = true;
             }
 
             //Top Left Corner
             pos.SetValues(Position.Row - 2, Position.Column - 1);
-            if (Board.PositionExists(pos) && !IsThereTeamPiece(pos))
+            if (Board.PositionExists(pos) && CanMove(pos))
             {
                 mat[pos.Row, pos.Column] = true;
             }
 
             return mat;
+        }
+
+        //Methods
+        private bool CanMove(Position position)
+        {
+            ChessPiece chessPiece = (ChessPiece)Board.GetPiece(position);
+            return chessPiece == null || chessPiece.Color != Color;
         }
     }
 }
