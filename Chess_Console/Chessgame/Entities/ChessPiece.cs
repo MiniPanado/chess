@@ -31,11 +31,11 @@ namespace Chessgame.Entities
             return ChessPosition.FromPosition(Position);
         }
 
-        //Methods
-        protected bool CanMove(Position position)
+        //Methods bool
+        protected bool IsThereTeamPiece(Position position)
         {
             ChessPiece chessPiece = (ChessPiece)Board.GetPiece(position);
-            return chessPiece == null || chessPiece.Color != Color;
+            return chessPiece != null || chessPiece.Color == Color;
         }
 
         protected bool IsThereOpponentPiece(Position position)

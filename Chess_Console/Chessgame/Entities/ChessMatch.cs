@@ -222,6 +222,41 @@ namespace Chessgame.Entities
         {
             //White Pieces
             PlaceNewPiece('a', 1, new Rook(Board, Color.White));
+            PlaceNewPiece('b', 1, new Knight(Board, Color.White));
+            PlaceNewPiece('c', 1, new Bishop(Board, Color.White));
+            PlaceNewPiece('d', 1, new King(Board, Color.White));
+            PlaceNewPiece('e', 1, new Queen(Board, Color.White));
+            PlaceNewPiece('f', 1, new Bishop(Board, Color.White));
+            PlaceNewPiece('g', 1, new Knight(Board, Color.White));
+            PlaceNewPiece('h', 1, new Rook(Board, Color.White));
+
+            PlaceNewPiece('a', 2, new Pawn(Board, Color.White));
+            PlaceNewPiece('b', 2, new Pawn(Board, Color.White));
+            PlaceNewPiece('c', 2, new Pawn(Board, Color.White));
+            PlaceNewPiece('d', 2, new Pawn(Board, Color.White));
+            PlaceNewPiece('e', 2, new Pawn(Board, Color.White));
+            PlaceNewPiece('f', 2, new Pawn(Board, Color.White));
+            PlaceNewPiece('g', 2, new Pawn(Board, Color.White));
+            PlaceNewPiece('h', 2, new Pawn(Board, Color.White));
+
+            //Black Pieces
+            PlaceNewPiece('a', 1, new Rook(Board, Color.Red));
+            PlaceNewPiece('b', 1, new Knight(Board, Color.Red));
+            PlaceNewPiece('c', 1, new Bishop(Board, Color.Red));
+            PlaceNewPiece('d', 1, new King(Board, Color.Red));
+            PlaceNewPiece('e', 1, new Queen(Board, Color.Red));
+            PlaceNewPiece('f', 1, new Bishop(Board, Color.Red));
+            PlaceNewPiece('g', 1, new Knight(Board, Color.Red));
+            PlaceNewPiece('h', 1, new Rook(Board, Color.Red));
+
+            PlaceNewPiece('a', 2, new Pawn(Board, Color.Red));
+            PlaceNewPiece('b', 2, new Pawn(Board, Color.Red));
+            PlaceNewPiece('c', 2, new Pawn(Board, Color.Red));
+            PlaceNewPiece('d', 2, new Pawn(Board, Color.Red));
+            PlaceNewPiece('e', 2, new Pawn(Board, Color.Red));
+            PlaceNewPiece('f', 2, new Pawn(Board, Color.Red));
+            PlaceNewPiece('g', 2, new Pawn(Board, Color.Red));
+            PlaceNewPiece('h', 2, new Pawn(Board, Color.Red));
         }
     }
 }

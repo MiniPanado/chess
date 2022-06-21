@@ -27,7 +27,7 @@ namespace Chessgame.Entities
             while(Board.PositionExists(pos) && !Board.ThereIsAPiece(pos))
             {
                 mat[pos.Row, pos.Column] = true;
-                pos.DecreaseRow();
+                pos.SetValues(Position.Row - 1, Position.Column);
             }
             if (Board.PositionExists(pos) && IsThereOpponentPiece(pos))
             {
@@ -39,7 +39,7 @@ namespace Chessgame.Entities
             while (Board.PositionExists(pos) && !Board.ThereIsAPiece(pos))
             {
                 mat[pos.Row, pos.Column] = true;
-                pos.IncreaseColumn();
+                pos.SetValues(Position.Row, Position.Column + 1);
             }
             if (Board.PositionExists(pos) && IsThereOpponentPiece(pos))
             {
@@ -51,7 +51,7 @@ namespace Chessgame.Entities
             while (Board.PositionExists(pos) && !Board.ThereIsAPiece(pos))
             {
                 mat[pos.Row, pos.Column] = true;
-                pos.IncreaseRow();
+                pos.SetValues(Position.Row + 1, Position.Column);
             }
             if (Board.PositionExists(pos) && IsThereOpponentPiece(pos))
             {
@@ -63,7 +63,7 @@ namespace Chessgame.Entities
             while (Board.PositionExists(pos) && !Board.ThereIsAPiece(pos))
             {
                 mat[pos.Row, pos.Column] = true;
-                pos.DecreaseColumn();
+                pos.SetValues(Position.Row, Position.Column - 1);
             }
             if (Board.PositionExists(pos) && IsThereOpponentPiece(pos))
             {
