@@ -22,6 +22,16 @@ namespace Chessboard.Entities
         }
 
         //Methods
+        public void SetRow(int row)
+        {
+            Row = row;
+        }
+
+        public void SetColumn(int column)
+        {
+            Column = column;
+        }
+
         public void SetValues(int row, int column)
         {
             Row = row;

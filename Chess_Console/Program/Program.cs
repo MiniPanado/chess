@@ -20,13 +20,14 @@ namespace Program
                     Console.Clear();
                     UI.PrintChessMatch(chessMatch, capturedPieces);
 
-                    Console.Write("Source: ");
+                    Console.Write("\nSource: ");
                     ChessPosition source = UI.ReadChessPosition();
 
                     bool[,] possibleMoves = chessMatch.PossiblesMoves(source);
+                    ChessPiece[,] pieces = chessMatch.GetPieces();
 
                     Console.Clear();
-                    UI.PrintBoard(chessMatch.GetPieces(), possibleMoves);
+                    UI.PrintBoard(pieces, possibleMoves);
 
                     Console.Write("Target: ");
                     ChessPosition target = UI.ReadChessPosition();
@@ -35,21 +36,24 @@ namespace Program
 
                     if (capturedPiece != null)
                     {
-                        capturedPieces.Add(capturedPiece);  
+                        capturedPieces.Add(capturedPiece);
                     }
                 }
                 catch (BoardException e)
                 {
                     Console.WriteLine($"Board Error: {e.Message}");
+                    Console.ReadKey();
                 }
                 catch (GameException e)
                 {
                     Console.WriteLine($"Game Error: {e.Message}");
+                    Console.ReadKey();
                 }
             }
 
             Console.Clear();
             UI.PrintChessMatch(chessMatch, capturedPieces);
+            Console.ReadKey();
         }
     }
 }

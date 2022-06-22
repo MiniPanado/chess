@@ -1,4 +1,7 @@
-﻿namespace Chessboard.Entities
+﻿using Chessboard.Entities;
+using Chessgame.Entities;
+
+namespace Chessboard.Entities
 {
     abstract class Piece
     {
@@ -13,20 +16,24 @@
         }
 
         //Methods
+        public void SetPosition(Position position)
+        {
+            Position = position;
+        }
+
         public abstract bool[,] PossibleMoves();
 
         public bool GetPossibleMove(Position position)
         {
-            bool[,] possibleMoves = PossibleMoves();
-            return possibleMoves[Position.Row, Position.Column];
+            return PossibleMoves()[position.Row, position.Column];
         }
 
         public bool IsThereAnyPossibleMove()
         {
             bool[,] mat = PossibleMoves();
-            for (int i = 0; i < mat.Length; i++)
+            for (int i = 0; i < mat.GetLength(0); i++)
             {
-                for (int j = 0; j < mat.Length; j++)
+                for (int j = 0; j < mat.GetLength(1); j++)
                 {
                     if (mat[i, j])
                     {

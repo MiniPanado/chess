@@ -1,4 +1,5 @@
 ﻿using Chessboard.Entities;
+using Chessgame.Exceptions;
 
 namespace Chessgame.Entities
 {
@@ -9,14 +10,8 @@ namespace Chessgame.Entities
         public int Row { get; private set; }
 
         //Constructors
-        public ChessPosition()
-        {
-        }
-
         public ChessPosition(char column, int row)
         {
-            if (column < 'a' || column > 'h' || row < 1 || row > 8)
-
             Column = column;
             Row = row;
         }

@@ -118,14 +118,14 @@ namespace Chessgame.Entities
         //Methods
         private bool CanMove(Position position)
         {
-            ChessPiece chessPiece = (ChessPiece)Board.GetPiece(position);
-            return chessPiece == null || chessPiece.Color != Color;
+            ChessPiece piece = (ChessPiece)Board.GetPiece(position);
+            return piece == null || piece.Color != Color;
         }
 
         private bool TestRookCastling(Position position)
         {
-            ChessPiece chessPiece = (ChessPiece)Board.GetPiece(position);
-            return chessPiece != null && chessPiece is Rook && chessPiece.Color == Color && chessPiece.MoveCount == 0;
+            ChessPiece piece = (ChessPiece)Board.GetPiece(position);
+            return piece != null && piece is Rook && piece.Color == Color && piece.MoveCount == 0;
         }
     }
 }

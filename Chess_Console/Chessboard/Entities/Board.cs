@@ -17,10 +17,6 @@ namespace Chessboard.Entities
             {
                 throw new BoardException("Error creating board: there must be at least 1 row and 1 column");
             }
-            if (rows != columns)
-            {
-                throw new BoardException("Error creating board: the number of rows has to be equal to the number of columns");
-            }
 
             Rows = rows;
             Columns = columns;
@@ -30,27 +26,40 @@ namespace Chessboard.Entities
         //Methods
         public Piece GetPiece(Position position)
         {
+            //Exceptions
+            if (!PositionExists(position))
+            {
+                throw new BoardException("Position not on the board");
+            }
+
             return Pieces[position.Row, position.Column];
         }
 
         public Piece GetPiece(int row, int column)
         {
+            //Exceptions
+            if (!PositionExists(row, column))
+            {
+                throw new BoardException("Position not on the board");
+            }
+
             return Pieces[row, column];
         }
 
         public void PlacePiece(Piece piece, Position position)
         {
             //Exceptions
-            if (ThereIsAPiece(position))
-            {
-                throw new BoardException("There is already a piece on position " + position);
-            }
             if (!PositionExists(position))
             {
                 throw new BoardException("Position not on the board");
             }
+            if (ThereIsAPiece(position))
+            {
+                throw new BoardException("There is already a piece on position " + position);
+            }
 
             Pieces[position.Row, position.Column] = piece;
+            piece.SetPosition(position);
         }
 
         public Piece RemovePiece(Position position)
@@ -60,18 +69,16 @@ namespace Chessboard.Entities
             {
                 throw new BoardException("Position not on the board");
             }
-
             if (GetPiece(position) == null)
             {
                 return null;
             }
-            else
-            {
-                Piece capturedPiece = GetPiece(position);
-                Pieces[position.Row, position.Column] = null;
 
-                return capturedPiece;
-            }
+            Piece capturedPiece = GetPiece(position);
+            capturedPiece.SetPosition(null);
+            Pieces[position.Row, position.Column] = null;
+
+            return capturedPiece;
         }
 
         //Methods
@@ -87,6 +94,11 @@ namespace Chessboard.Entities
 
         public bool ThereIsAPiece(Position position)
         {
+            if (!PositionExists(position))
+            {
+                throw new BoardException("Position not on the board");
+            }
+
             return GetPiece(position) != null;
         }
     }

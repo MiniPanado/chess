@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Chessboard.Entities;
 using Chessboard.Enums;
 using Chessgame.Entities;
+using Chessgame.Exceptions;
 
 namespace Program
 {
@@ -11,23 +11,39 @@ namespace Program
         public static ChessPosition ReadChessPosition()
         {
             string s = Console.ReadLine();
-            char column = s[0];
-            int line = int.Parse(s[1] + "");
 
-            return new ChessPosition(column, line);
+            //Exceptions
+            if (String.IsNullOrWhiteSpace(s))
+            {
+                throw new GameException("Enter a non-null value");
+            }
+            if (!int.TryParse(s[1].ToString(), out _))
+            {
+                throw new GameException("The row has to be an integer");
+            }
+
+            char column = s[0];
+            int row = int.Parse(s[1].ToString());
+
+            //Exceptions
+            if (column < 'a' || column > 'h' || row < 1 || row > 8)
+            {
+                throw new GameException("Valid values are from a1 to h8.");
+            }
+
+            return new ChessPosition(column, row);
         }
 
-        public static void PrintChessMatch(ChessMatch chessMatch)
+        public static void PrintChessMatch(ChessMatch chessMatch, HashSet<ChessPiece> capturedPieces)
         {
-            UI.PrintBoard(chessMatch);
-            PrintCapturedPieces(chessMatch);
+            UI.PrintBoard(chessMatch.GetPieces());
+            PrintCapturedPieces(capturedPieces);
             Console.WriteLine($"\nTurn: {chessMatch.Turn}");
-            
 
             if (!chessMatch.CheckMate)
             {
                 Console.WriteLine($"Awaiting player: {chessMatch.CurrentPlayer}");
-                
+
                 if (chessMatch.Check)
                 {
                     Console.WriteLine("CHECK!");
@@ -36,17 +52,18 @@ namespace Program
             else
             {
                 Console.WriteLine("CHECKMATE!");
+                Console.WriteLine($"Winner: {chessMatch.CurrentPlayer}");
             }
         }
 
-        public static void PrintBoard(Board board)
+        private static void PrintBoard(ChessPiece[,] pieces)
         {
-            for (int i = 0; i < board.Rows; i++)
+            for (int i = 0; i < pieces.GetLength(0); i++)
             {
-                Console.Write($"{board.Rows - i} ");
-                for (int j = 0; j < board.Columns; j++)
+                Console.Write($"{8 - i} ");
+                for (int j = 0; j < pieces.GetLength(1); j++)
                 {
-                    PrintPiece((ChessPiece)board.GetPiece(i, j));
+                    PrintPiece(pieces[i, j]);
                 }
                 Console.WriteLine();
             }
@@ -54,12 +71,12 @@ namespace Program
             Console.WriteLine("  a b c d e f g h");
         }
 
-        public static void PrintBoard(Board board, bool[,] possibleMoves)
+        public static void PrintBoard(ChessPiece[,] pieces, bool[,] possibleMoves)
         {
-            for (int i = 0; i < board.Rows; i++)
+            for (int i = 0; i < pieces.GetLength(0); i++)
             {
-                Console.Write($"{board.Rows - i} ");
-                for (int j = 0; j < board.Columns; j++)
+                Console.Write($"{8 - i} ");
+                for (int j = 0; j < pieces.GetLength(1); j++)
                 {
                     if (possibleMoves[i, j])
                     {
@@ -70,7 +87,7 @@ namespace Program
                         Console.BackgroundColor = ConsoleColor.Black;
                     }
 
-                    PrintPiece((ChessPiece)board.GetPiece(i, j));
+                    PrintPiece(pieces[i, j]);
                 }
 
                 Console.BackgroundColor = ConsoleColor.Black;
@@ -78,28 +95,6 @@ namespace Program
             }
 
             Console.WriteLine("  a b c d e f g h");
-        }
-
-        private static void PrintCapturedPiecesSets(HashSet<Piece> capturedPieces)
-        {
-            Console.Write("[");
-            foreach (Piece capturedPiece in capturedPieces)
-            {
-                Console.Write($"{capturedPiece} ");
-            }
-            Console.WriteLine("]");
-        }
-
-        private static void PrintCapturedPieces(ChessMatch match)
-        {
-            Console.WriteLine("Captured pieces: ");
-            Console.Write("White: ");
-            PrintCapturedPiecesSets(match.GetCapturedPieces(Color.White));
-
-            Console.Write("Black: ");
-            Console.ForegroundColor = ConsoleColor.Red;
-            PrintCapturedPiecesSets(match.GetCapturedPieces(Color.Red));
-            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         private static void PrintPiece(ChessPiece piece)
@@ -125,6 +120,43 @@ namespace Program
 
                 Console.Write(" ");
             }
+        }
+
+        private static void PrintCollection(HashSet<ChessPiece> capturedPieces)
+        {
+            Console.Write("[");
+            foreach (ChessPiece capturedPiece in capturedPieces)
+            {
+                Console.Write($"{capturedPiece} ");
+            }
+            Console.WriteLine("]");
+        }
+
+        private static void PrintCapturedPieces(HashSet<ChessPiece> capturedPieces)
+        {
+            HashSet<ChessPiece> whitePieces = new HashSet<ChessPiece>();
+            HashSet<ChessPiece> blackPieces = new HashSet<ChessPiece>();
+
+            foreach (ChessPiece piece in capturedPieces)
+            {
+                if (piece.Color == Color.White)
+                {
+                    whitePieces.Add(piece);
+                }
+                else
+                {
+                    blackPieces.Add(piece);
+                }
+            }
+
+            Console.WriteLine("\nCaptured pieces: ");
+            Console.Write("White: ");
+            PrintCollection(whitePieces);
+
+            Console.Write("Black: ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            PrintCollection(blackPieces);
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
     }
 }
