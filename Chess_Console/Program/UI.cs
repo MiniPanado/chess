@@ -18,7 +18,7 @@ namespace Program
             string s = Console.ReadLine();
 
             //Exceptions
-            if (String.IsNullOrWhiteSpace(s))
+            if (string.IsNullOrWhiteSpace(s))
             {
                 throw new GameException("Enter a non-null value");
             }
@@ -65,7 +65,7 @@ namespace Program
             }
         }
 
-        private static void PrintBoard(ChessPiece[,] pieces)
+        public static void PrintBoard(ChessPiece[,] pieces)
         {
             int rows = pieces.GetLength(0);
             int columns = pieces.GetLength(1);

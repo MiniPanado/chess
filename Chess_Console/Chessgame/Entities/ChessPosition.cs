@@ -1,5 +1,4 @@
 ﻿using Chessboard.Entities;
-using Chessgame.Exceptions;
 
 namespace Chessgame.Entities
 {
@@ -14,12 +13,6 @@ namespace Chessgame.Entities
         {
             Column = column;
             Row = row;
-        }
-
-        //Overrides
-        public override string ToString()
-        {
-            return $"{Column}{Row}";
         }
 
         //Methods

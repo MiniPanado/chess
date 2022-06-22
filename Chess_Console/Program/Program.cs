@@ -23,7 +23,7 @@ namespace Program
                     Console.Write("\nSource: ");
                     ChessPosition source = UI.ReadChessPosition();
 
-                    bool[,] possibleMoves = chessMatch.PossiblesMoves(source);
+                    bool[,] possibleMoves = chessMatch.GetPossiblesMoves(source);
                     ChessPiece[,] pieces = chessMatch.GetPieces();
 
                     Console.Clear();

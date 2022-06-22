@@ -31,14 +31,15 @@ namespace Chessgame.Entities
                 //Bellow
                 pos.SetValues(Position.Row + 1, Position.Column);
                 Position pos2 = new Position(Position.Row + 2, Position.Column);
-                if (Board.PositionExists(pos) && !Board.ThereIsAPiece(pos) && Board.PositionExists(pos2) && !Board.ThereIsAPiece(pos2) && MoveCount == 0)
+                if (Board.PositionExists(pos) && !Board.ThereIsAPiece(pos))
                 {
                     mat[pos.Row, pos.Column] = true;
-                    mat[pos2.Row, pos2.Column] = true;
-                }
-                else if (Board.PositionExists(pos) && !Board.ThereIsAPiece(pos))
-                {
-                    mat[pos.Row, pos.Column] = true;
+
+                    //Bellow Initial
+                    if (Board.PositionExists(pos2) && !Board.ThereIsAPiece(pos2) && MoveCount == 0)
+                    {
+                        mat[pos2.Row, pos2.Column] = true;
+                    }
                 }
 
                 //Bottom Right Corner
@@ -75,14 +76,15 @@ namespace Chessgame.Entities
                 //Above
                 pos.SetValues(Position.Row - 1, Position.Column);
                 Position pos2 = new Position(Position.Row - 2, Position.Column);
-                if (Board.PositionExists(pos) && !Board.ThereIsAPiece(pos) && Board.PositionExists(pos2) && !Board.ThereIsAPiece(pos2) && MoveCount == 0)
+                if (Board.PositionExists(pos) && !Board.ThereIsAPiece(pos))
                 {
                     mat[pos.Row, pos.Column] = true;
-                    mat[pos2.Row, pos2.Column] = true;
-                }
-                else if (Board.PositionExists(pos) && !Board.ThereIsAPiece(pos))
-                {
-                    mat[pos.Row, pos.Column] = true;
+
+                    //Above Initial
+                    if (Board.PositionExists(pos2) && !Board.ThereIsAPiece(pos2) && MoveCount == 0)
+                    {
+                        mat[pos2.Row, pos2.Column] = true;
+                    }
                 }
 
                 //Top Right Corner

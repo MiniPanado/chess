@@ -35,7 +35,7 @@ namespace Chessgame.Entities
         protected bool IsThereOpponentPiece(Position position)
         {
             ChessPiece chessPiece = (ChessPiece)Board.GetPiece(position);
-            return chessPiece != null && chessPiece.Color != Color;
+            return Board.ThereIsAPiece(position) && chessPiece.Color != Color;
         }
     }
 }

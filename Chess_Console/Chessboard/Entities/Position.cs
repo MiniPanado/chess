@@ -15,12 +15,6 @@ namespace Chessboard.Entities
             Column = column;
         }
 
-        //Overrides
-        public override string ToString()
-        {
-            return $"{Row}, {Column}";
-        }
-
         //Methods
         public void SetRow(int row)
         {

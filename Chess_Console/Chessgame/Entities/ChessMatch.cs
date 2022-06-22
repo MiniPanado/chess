@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using Program;
+using System.Collections.Generic;
 using Chessboard.Entities;
 using Chessboard.Enums;
 using Chessgame.Exceptions;
@@ -44,7 +46,7 @@ namespace Chessgame.Entities
             return mat;
         }
 
-        public bool[,] PossiblesMoves(ChessPosition sourcePosition)
+        public bool[,] GetPossiblesMoves(ChessPosition sourcePosition)
         {
             Position source = sourcePosition.ToPosition();
             ValidateSourcePosition(source);
@@ -73,13 +75,40 @@ namespace Chessgame.Entities
 
             // #specialmove promotion
             Promoted = null;
-            if (movedPiece is Pawn)
+            if (movedPiece is Pawn && ((movedPiece.Color == Color.Red && target.Row == 0) || (movedPiece.Color == Color.White && target.Row == 7)))
             {
-                if ((movedPiece.Color == Color.Red && target.Row == 0) || (movedPiece.Color == Color.White && target.Row == 7))
+
+                Promoted = (ChessPiece)Board.GetPiece(target);
+
+                while (Promoted is Pawn)
                 {
-                    Promoted = (ChessPiece)Board.GetPiece(target);
-                    Promoted = ReplacePromotedPiece("Q");
+                    try
+                    {
+                        Console.Clear();
+                        UI.PrintBoard(GetPieces());
+
+                        Console.Write("\nYou want to be promoted to what piece (B, N, R, Q)? ");
+                        string type = Console.ReadLine().ToUpper();
+
+                        //Exceptions
+                        if (string.IsNullOrEmpty(type))
+                        {
+                            throw new GameException("Enter a non-null value");
+                        }
+                        if (!type.Equals("B") && !type.Equals("N") && !type.Equals("R") && !type.Equals("Q"))
+                        {
+                            throw new GameException("You have to choose between (B, N, R, Q)");
+                        }
+
+                        Promoted = ReplacePromotedPiece(type);
+                    }
+                    catch (GameException e)
+                    {
+                        Console.WriteLine($"Game Error: {e.Message}");
+                        Console.ReadKey();
+                    }
                 }
+
             }
 
             if (TestCheck(CurrentPlayer))
@@ -90,9 +119,14 @@ namespace Chessgame.Entities
 
             Check = TestCheck(Opponent(CurrentPlayer));
 
-            if (TestCheckMate(Opponent(CurrentPlayer))) CheckMate = true;
-            
-            else NextTurn();
+            if (TestCheckMate(Opponent(CurrentPlayer)))
+            {
+                CheckMate = true;
+            }
+            else
+            {
+                NextTurn();
+            }
 
             return (ChessPiece)capturedPiece;
         }
@@ -102,10 +136,6 @@ namespace Chessgame.Entities
             if (Promoted == null)
             {
                 throw new GameException("There is no piece to be promoted");
-            }
-            if (!type.Equals("B") && !type.Equals("N") && !type.Equals("R") && !type.Equals("Q"))
-            {
-                return Promoted;
             }
 
             Position pos = Promoted.Position;
@@ -123,8 +153,8 @@ namespace Chessgame.Entities
         {
             if (type.Equals("B")) return new Bishop(Board, color);
             if (type.Equals("N")) return new Knight(Board, color);
-            if (type.Equals("Q")) return new Queen(Board, color);
-            return new Rook(Board, color);
+            if (type.Equals("R")) return new Rook(Board, color);
+            return new Queen(Board, color);
         }
 
         private Piece MakeMove(Position source, Position target)
