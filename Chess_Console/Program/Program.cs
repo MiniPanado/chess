@@ -29,7 +29,7 @@ namespace Program
                     Console.Clear();
                     UI.PrintBoard(pieces, possibleMoves);
 
-                    Console.Write("Target: ");
+                    Console.Write("\nTarget: ");
                     ChessPosition target = UI.ReadChessPosition();
 
                     ChessPiece capturedPiece = chessMatch.PerformsChessMove(source, target);

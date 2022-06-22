@@ -8,6 +8,11 @@ namespace Program
 {
     class UI
     {
+        private static ConsoleColor DefaultForegroundColor = ConsoleColor.Gray;
+        private static ConsoleColor ContrastColor = ConsoleColor.Yellow;
+        private static ConsoleColor DefaultBackgroundColor = ConsoleColor.Black;
+        private static ConsoleColor PossibleMovesColor = ConsoleColor.DarkGray;
+
         public static ChessPosition ReadChessPosition()
         {
             string s = Console.ReadLine();
@@ -16,6 +21,10 @@ namespace Program
             if (String.IsNullOrWhiteSpace(s))
             {
                 throw new GameException("Enter a non-null value");
+            }
+            if (s.Length < 2)
+            {
+                throw new GameException("You have to declare a column and a row");
             }
             if (!int.TryParse(s[1].ToString(), out _))
             {
@@ -58,43 +67,71 @@ namespace Program
 
         private static void PrintBoard(ChessPiece[,] pieces)
         {
-            for (int i = 0; i < pieces.GetLength(0); i++)
+            int rows = pieces.GetLength(0);
+            int columns = pieces.GetLength(1);
+
+            for (int i = 0; i < rows; i++)
             {
-                Console.Write($"{8 - i} ");
-                for (int j = 0; j < pieces.GetLength(1); j++)
+                Console.ForegroundColor = ContrastColor;
+                Console.Write($"{rows - i} ");
+                Console.ForegroundColor = DefaultForegroundColor;
+
+                for (int j = 0; j < columns; j++)
                 {
                     PrintPiece(pieces[i, j]);
                 }
                 Console.WriteLine();
             }
 
-            Console.WriteLine("  a b c d e f g h");
+            Console.ForegroundColor = ContrastColor;
+            Console.Write(" ");
+            for (int i = 0; i < columns; i++)
+            {
+                char c = (char)('a' + i);
+                Console.Write($" {c}");
+            }
+            Console.ForegroundColor = DefaultForegroundColor;
+            Console.WriteLine();
         }
 
         public static void PrintBoard(ChessPiece[,] pieces, bool[,] possibleMoves)
         {
-            for (int i = 0; i < pieces.GetLength(0); i++)
+            int rows = pieces.GetLength(0);
+            int columns = pieces.GetLength(1);
+
+            for (int i = 0; i < rows; i++)
             {
-                Console.Write($"{8 - i} ");
-                for (int j = 0; j < pieces.GetLength(1); j++)
+                Console.ForegroundColor = ContrastColor;
+                Console.Write($"{rows - i} ");
+                Console.ForegroundColor = DefaultForegroundColor;
+
+                for (int j = 0; j < columns; j++)
                 {
                     if (possibleMoves[i, j])
                     {
-                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                        Console.BackgroundColor = PossibleMovesColor;
                     }
                     else
                     {
-                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = DefaultBackgroundColor;
                     }
 
                     PrintPiece(pieces[i, j]);
                 }
 
-                Console.BackgroundColor = ConsoleColor.Black;
+                Console.BackgroundColor = DefaultBackgroundColor;
                 Console.WriteLine();
             }
 
-            Console.WriteLine("  a b c d e f g h");
+            Console.ForegroundColor = ContrastColor;
+            Console.Write(" ");
+            for (int i = 0; i < columns; i++)
+            {
+                char c = (char)('a' + i);
+                Console.Write($" {c}");
+            }
+            Console.ForegroundColor = DefaultForegroundColor;
+            Console.WriteLine();
         }
 
         private static void PrintPiece(ChessPiece piece)
@@ -109,13 +146,13 @@ namespace Program
                 {
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write(piece);
-                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.ForegroundColor = DefaultForegroundColor;
                 }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write(piece);
-                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.ForegroundColor = DefaultForegroundColor;
                 }
 
                 Console.Write(" ");
@@ -151,12 +188,14 @@ namespace Program
 
             Console.WriteLine("\nCaptured pieces: ");
             Console.Write("White: ");
+            Console.ForegroundColor = ConsoleColor.White;
             PrintCollection(whitePieces);
+            Console.ForegroundColor = DefaultForegroundColor;
 
             Console.Write("Black: ");
             Console.ForegroundColor = ConsoleColor.Red;
             PrintCollection(blackPieces);
-            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.ForegroundColor = DefaultForegroundColor;
         }
     }
 }

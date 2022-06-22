@@ -59,36 +59,7 @@ namespace Chessgame.Entities
             ValidateTargetPosition(source, target);
 
             Piece capturedPiece = MakeMove(source, target);
-
-            if (TestCheck(CurrentPlayer))
-            {
-                UndoMove(source, target, capturedPiece);
-                throw new GameException("You can't put yourself in check");
-            }
-
-            // #specialmove promotion
             ChessPiece movedPiece = (ChessPiece)Board.GetPiece(target);
-
-            Promoted = null;
-            if (movedPiece is Pawn)
-            {
-                if ((movedPiece.Color == Color.White && target.Row == 0) || (movedPiece.Color == Color.Red && target.Row == 7))
-                {
-                    Promoted = (ChessPiece)Board.GetPiece(target);
-                    Promoted = ReplacePromotedPiece("Q");
-                }
-            }
-
-            Check = TestCheck(Opponent(CurrentPlayer));
-
-            if (TestCheckMate(Opponent(CurrentPlayer)))
-            {
-                CheckMate = true;
-            }
-            else
-            {
-                NextTurn();
-            }
 
             // #specialmove en passant
             if (movedPiece is Pawn && (target.Row == source.Row - 2 || target.Row == source.Row + 2))
@@ -100,6 +71,29 @@ namespace Chessgame.Entities
                 EnPassantVulnerable = null;
             }
 
+            // #specialmove promotion
+            Promoted = null;
+            if (movedPiece is Pawn)
+            {
+                if ((movedPiece.Color == Color.Red && target.Row == 0) || (movedPiece.Color == Color.White && target.Row == 7))
+                {
+                    Promoted = (ChessPiece)Board.GetPiece(target);
+                    Promoted = ReplacePromotedPiece("Q");
+                }
+            }
+
+            if (TestCheck(CurrentPlayer))
+            {
+                UndoMove(source, target, capturedPiece);
+                throw new GameException("You can't put yourself in check");
+            }
+
+            Check = TestCheck(Opponent(CurrentPlayer));
+
+            if (TestCheckMate(Opponent(CurrentPlayer))) CheckMate = true;
+            
+            else NextTurn();
+
             return (ChessPiece)capturedPiece;
         }
 
@@ -109,7 +103,7 @@ namespace Chessgame.Entities
             {
                 throw new GameException("There is no piece to be promoted");
             }
-            if (!type.Equals("B") && !type.Equals("N") && !type.Equals("R") & !type.Equals("Q"))
+            if (!type.Equals("B") && !type.Equals("N") && !type.Equals("R") && !type.Equals("Q"))
             {
                 return Promoted;
             }
